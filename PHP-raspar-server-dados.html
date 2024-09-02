@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Raspagem de Site</title>
+</head>
+<body>
+
+<h1>Raspagem de Site<br>pesquisar RASPAR</h1>
+
+<!-- Formulário para enviar a URL -->
+<form method="POST" action="">
+    <label for="url">Digite a URL que deseja acessar:</label><br>
+    <input type="text" id="url" name="url" placeholder="https://www.bancobai.ao/pt/particulares" required><br><br>
+    
+    <input type="submit" value="Raspar">
+</form>
+
+<div>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['url'])) {
+    // Pega a URL do formulário e sanitiza
+    $url = filter_var($_POST['url'], FILTER_SANITIZE_URL);
+
+    // Define a variável $raspar com a URL
+    $raspar = "raspar*raspar,$url*";
+
+    // Valida a URL
+    if (filter_var($url, FILTER_VALIDATE_URL)) {
+        // Faz a solicitação para o site e obtém o conteúdo
+        $content = file_get_contents($url);
+
+        // Verifica se o conteúdo foi obtido corretamente
+        if ($content !== false) {
+            // Mostra o conteúdo na tela
+            echo $content;
+        } else {
+            echo "Não foi possível obter o conteúdo da URL.";
+        }
+    } else {
+        echo "URL inválida. Por favor, tente novamente.";
+    }
+
+    // Exibe a variável $raspar
+    echo "<p><strong>Variável raspar:</strong> $raspar</p>";
+}
+?>
+
+</div>
+
+</body>
+</html>
+
