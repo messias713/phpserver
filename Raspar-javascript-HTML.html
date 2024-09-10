@@ -1,0 +1,48 @@
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitura de arquivo</title>
+</head>
+<body>
+    <!-- Input para selecionar arquivo -->
+    <input type="file" id="fileInput" accept=".txt" style="display: none;">
+    <!-- Botão para carregar arquivo -->
+    <button onclick="loadFile()">Carregar Arquivo</button>
+    <!-- Pre para exibir conteúdo do arquivo -->
+    <pre id="output" style="white-space: pre-wrap;"></pre>
+
+    <!-- JavaScript para lidar com evento de carregamento de arquivo -->
+    <script>
+        function loadFile() {
+            // Obter elementos do HTML
+            const fileInput = document.getElementById('fileInput');
+            const output = document.getElementById('output');
+
+            // Permitir selecionar um arquivo
+            fileInput.click();
+
+            // Adicionar evento para quando arquivo for selecionado
+            fileInput.addEventListener('change', function (e) {
+                // Obter o primeiro arquivo selecionado
+                const file = e.target.files[0];
+
+                // Se arquivo encontrado
+                if (file) {
+                    // Criar leitor de arquivo
+                    const reader = new FileReader();
+                    
+                    // Definir callback para quando leitura for concluída
+                    reader.onload = function (event) {
+                        // Exibir conteúdo do arquivo no pre element
+                        output.textContent = event.target.result;
+                    };
+
+                    // Iniciar leitura do arquivo como texto
+                    reader.readAsText(file);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
