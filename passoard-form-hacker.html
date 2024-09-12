@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de Palavras e Pesquisa Avançada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Recuperação de Palavras</h1>
+    <form id="wordRecuperationForm">
+        <label for="rememberedWord">Palavra pra lembrar:</label>
+        <input type="text" id="rememberedWord" required>
+        <br>
+        <label for="forgottenWord">Palavra esquecida:</label>
+        <input type="text" id="forgottenWord" required>
+        <br>
+        <button type="submit">Verificar Similaridade</button>
+    </form>
+
+    <div id="result" style="color: green;"></div>
+
+    <script>
+        function levenshtein(a, b) {
+            const matrix = [];
+
+            for (let i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+            for (let j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        document.getElementById("wordRecuperationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            const rememberedWord = document.getElementById("rememberedWord").value;
+            const forgottenWord = document.getElementById("forgottenWord").value;
+
+            let similarity = 0;
+            if (forgottenWord.toLowerCase() === rememberedWord.toLowerCase()) {
+                similarity = 100;
+            } else {
+                // Calcula a distância de Levenshtein
+                const distance = levenshtein(rememberedWord.toLowerCase(), forgottenWord.toLowerCase());
+                const maxLen = Math.max(rememberedWord.length, forgottenWord.length);
+                similarity = ((maxLen - distance) / maxLen) * 100;
+            }
+
+            document.getElementById("result").innerText = `A similaridade entre as palavras é de ${similarity.toFixed(2)}%.`;
+
+            // Abre um link se a similaridade for alta (por exemplo, maior que 80%)
+            if (similarity > 80) {
+                window.open("https://www.bde.es/wbe/es/", "_blank");
+            }
+        });
+    </script>
+
+    <h1>Pesquisa Avançada</h1>
+    <form action="/pesquisar" method="get" id="advancedSearchForm">
+        <label for="keyword">Palavras-chave:</label>
+        <input type="text" id="keyword" name="keyword" required><br>
+
+        <label for="category">Categoria:</label>
+        <select id="category" name="category">
+            <option value="todas">Todas</option>
+            <option value="documentos">Documentos</option>
+            <option value="imagens">Imagens</option>
+            <option value="videos">Vídeos</option>
+        </select><br>
+
+        <label for="dateRange">Intervalo de Data:</label>
+        <input type="date" id="startDate" name="startDate"> até
+        <input type="date" id="endDate" name="endDate"><br>
+
+        <label for="searchType">Tipo de Pesquisa:</label><br>
+        <input type="radio" id="get" name="method" value="get" checked>
+        <label for="get">GET</label><br>
+        <input type="radio" id="post" name="method" value="post">
+        <label for="post">POST</label><br>
+
+        <button type="submit">Pesquisar</button>
+    </form>
+
+    <script>
+        document.getElementById("advancedSearchForm").addEventListener("submit", function(event) {
+            const method = document.querySelector('input[name="method"]:checked').value;
+            if (method === "post") {
+                this.method = "post";
+            } else {
+                this.method = "get";
+            }
+        });
+    </script>
+</body>
+</html>
+
+
