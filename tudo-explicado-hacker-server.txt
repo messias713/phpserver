@@ -1,0 +1,136 @@
+COMO INVADIR QUALQUER SITE
+
+Criar pasta com o comando mkdir==pasta== puppeteer-scraper
+
+usar o comando npm init -y
+
+criar arquivo server.json no terminal com o comando==
+npm init -y
+se não estiver instalado instalar npm
+
+instalar==
+npm install puppeteer
+<------------------------------------------------------------------>
+depois de criar o server.json
+guardar o arquivo na pasta ==puppeteer-scraper
+
+Agora criar arquivo== scraper.js
+e adicionalo há pasta==puppeteer-scraper
+<-------------------------------------------------------->
+script .JS a usar==
+// scraper.js
+const puppeteer = require('puppeteer');
+
+async function scrapeWebsite(url) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  try {
+    await page.goto(url);
+    await page.waitForSelector('body');
+
+    // Extrair todo o HTML da página
+    const html = await page.evaluate(() => document.documentElement.outerHTML);
+
+    // Usar uma biblioteca de parsing HTML para remover tags e manter apenas o texto
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const text = doc.body.textContent.trim();
+
+    console.log(text);
+
+    await browser.close();
+    return text;
+  } catch (error) {
+    console.error('Erro ao raspar o site:', error);
+    await browser.close();
+    return null;
+  }
+}
+
+<---------------------------------------------------------->
+Agora baixar o site que queremos invadir
+
+exemplo https://banco.espanha.com
+
+Copiar o arquivo html do site e inserilo direto
+na pasta banco espanha.
+
+BAIXAMOS SEMPRE O SITE QUE QUEREMOS INVADIR
+para dentro da pasta==puppeteer-scraper
+
+<---------------------------------------------------------------------->
+
+
+O código que você forneceu está tentando usar o Puppeteer, que é uma biblioteca Node.js para controlar o Chrome ou Chromium. No entanto, o Puppeteer não pode ser executado diretamente em um navegador da web, pois ele é uma biblioteca de servidor. Para que o código funcione, você precisa executá-lo em um ambiente Node.js.
+
+Passos para Executar o Código com Puppeteer
+Instalar o Node.js: Se você ainda não tem o Node.js instalado, faça o download e instale-o a partir do site oficial do Node.js.
+Criar um Novo Projeto:
+Crie um novo diretório para o seu projeto e navegue até ele:
+bash
+
+Copiar código
+mkdir puppeteer-scraper
+cd puppeteer-scraper
+Inicializar o Projeto:
+Inicialize um novo projeto Node.js:
+bash
+
+Copiar código
+npm init -y
+Instalar o Puppeteer:
+Instale o Puppeteer:
+bash
+
+Copiar código
+npm install puppeteer
+Criar o Arquivo de Script:
+Crie um arquivo chamado scraper.js e cole o seguinte código:
+javascript
+
+Copiar código
+// scraper.js
+const puppeteer = require('puppeteer');
+
+async function scrapeWebsite(url) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  try {
+    await page.goto(url);
+    await page.waitForSelector('body');
+
+    // Extrair todo o HTML da página
+    const html = await page.evaluate(() => document.documentElement.outerHTML);
+
+    // Usar uma biblioteca de parsing HTML para remover tags e manter apenas o texto
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const text = doc.body.textContent.trim();
+
+    console.log(text);
+
+    await browser.close();
+    return text;
+  } catch (error) {
+    console.error('Erro ao raspar o site:', error);
+    await browser.close();
+    return null;
+  }
+}
+
+// Substitua "https://www.exemplo.com" pelo URL do site que você deseja raspar
+scrapeWebsite('https://www.bde.es/wbe/es/');
+Executar o Script:
+Execute o script usando Node.js:
+bash
+
+Copiar código
+node scraper.js
+Observações:
+Ambiente de Execução: O Puppeteer deve ser executado em um ambiente Node.js, não em um navegador. Portanto, o código HTML que você forneceu não pode ser executado diretamente em um navegador.
+Permissões e Acesso: Certifique-se de que o site que você está tentando raspar permite a raspagem de dados. Verifique os Termos de Serviço do site para garantir que você não está violando nenhuma regra.
+Desempenho: O Puppeteer pode consumir muitos recursos, especialmente se você estiver raspando várias páginas ou sites complexos. Use-o com cautela.
+Alternativa com Fetch API
+Se você deseja uma solução que funcione diretamente em um navegador, você pode usar a Fetch API, mas isso pode ser limitado por CORS, como discutido anteriormente. Se você precisar de uma solução que funcione em um navegador, considere usar um servidor proxy, conforme mencionado em respostas anteriores.
