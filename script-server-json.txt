@@ -1,0 +1,92 @@
+<iframe id="demo" src="https://psicografia23.blogspot.com" width="100%" height="300"></iframe>
+
+<script>
+const data = {
+  "sites": [
+    {
+      "name": "psicografia23",
+      "url": "https://psicografia23.blogspot.com/"
+    }
+  ]
+};
+
+let currentIndex = 0;
+
+function updateIframe() {
+  document.getElementById('demo').src = data.sites[currentIndex].url;
+  currentIndex = (currentIndex + 1) % data.sites.length;
+}
+
+updateIframe(); // Carregar site inicialmente
+
+setInterval(updateIframe, 100000); // 100 segundos
+</script>
+<----------------------------------------------------------------------------->
+
+
+
+ {
+
+  "name": "mcegonha",
+
+  "version": "1.0.0",
+
+  "description": "Um site para psicografia e postagens relacionadas.",
+
+  "main": "index.js",
+
+  "scripts": {
+
+    "start": "node index.js",
+
+    "test": "echo \"Error: no test specified\" && exit 1"
+
+  },
+
+  "keywords": ["psicografia", "blog", "postagens"],
+
+  "author": "Seu Nome",
+
+  "license": "ISC",
+
+  "dependencies": {
+
+    "express": "^4.17.1",
+
+    "mongoose": "^5.10.9",
+
+    "bcryptjs": "^2.4.3",
+
+    "jsonwebtoken": "^9.0.0",
+
+    "html-to-text": "^9.0.0",
+
+    "body-parser": "^1.19.1"
+
+  },
+
+  "countries": [
+
+    "USA",
+
+    "Canada",
+
+    "França",
+
+    "Inglaterra",
+
+    "Austrália",
+
+    "Alemanha",
+
+    "Japão",
+
+    "Brasil",
+
+    "México",
+
+    "Índia"
+
+  ]
+
+}
