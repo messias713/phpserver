@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto de Site</title>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+
+    nav {
+        background-color: #333;
+        padding: 10px 0;
+    }
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li {
+        display: inline;
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: 3em;
+        margin: 20px 0;
+    }
+
+    section {
+        padding: 40px 20px;
+    }
+
+    blockquote {
+        font-size: 1.5em;
+        font-style: italic;
+        color: #555;
+        margin: 20px 0;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    footer {
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Conteúdo da página -->
+    <nav>
+        <ul>
+            <li><a href="https://psicografia23.blogspot.com">home</a></li>
+            <li><a href="https://sites.google.com/view/letrasdebem/home">Site principal.</a></li>
+            <li><a href="mailto:espiritualmanuel212@gmail.com">Contato</a></li>
+        </ul>
+    </nav>
+
+    <section id="home">
+        <h1>Letras de bem!</h1>
+        <p>Bem-vindo ao nosso site</p>
+    </section>
+
+    <section id="principal">
+        <h2>Principal</h2>
+        <p>Entre no nosso site principal. <a href="https://sites.google.com/view/letrasdebem/home">Google Sites! Letras de bem.</a></p>
+    </section>
+
+    <section id="verso-imagem">
+        <h2>Verso</h2>
+        <blockquote>"Mensagem!...</blockquote>
+        <img src="https://imgs.sapo.pt/sapoid/id2/avtr/fb/3b/6466c825b93c5317019aba7dd335f290814d/172553437432620420.PNG" alt="Beijo">
+    </section>
+
+    <!-- Seção de postagens dinâmicas -->
+    <section id="postagens">
+        <h2>Postagens Recentes</h2>
+        <div id="postagens-container">
+            <!-- Postagens serão carregadas aqui -->
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 espiritodesconhecido</p>
+    </footer>
+
+    <!-- Script para carregar as postagens dinâmicas -->
+    <script>
+        async function carregarPostagens() {
+            try {
+                const resposta = await fetch('posts.json');
+                const postagens = await resposta.json();
+
+                const container = document.getElementById('postagens-container');
+
+                postagens.forEach(post => {
+                    const titulo = document.createElement('h3');
+                    titulo.textContent = post.titulo;
+
+                    const conteudo = document.createElement('div');
+                    conteudo.innerHTML = post.conteudo;  // Permitir HTML no conteúdo
+
+                    container.appendChild(titulo);
+                    container.appendChild(conteudo);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar postagens:', error);
+            }
+        }
+
+        // Chamar a função quando a página carregar
+        window.onload = carregarPostagens;
+    </script>
+
+</body>
+</html>
+<--------------------------------------------------------------------------->
+
+
+[
+    {
+        "titulo": "Meu caminho.",
+        "conteudo": "<h1>Bem-vindo à minha jornada!</h1><p>Tudo é amor, vestindo viajar.<br>Sempre em fé, sem nunca parar de acreditar.<br>O meu caminho é continuar</p><img src='https://st.depositphotos.com/1016676/4017/i/950/depositphotos_40179825-stock-photo-hiker.jpg/image.jpg' alt='Imagem ilustrativa'>"
+    },
+    {
+        "titulo": "Carregar postagem json no html",
+        "conteudo": "<h3>criar arquivo json e index-html ==O json carrega postagens no html,<br>servers gratis GitHub Pages, Netlify, Vercel</h3>"
+    }
+]
+<------------------------------------------------------------------------->
+
+
+
